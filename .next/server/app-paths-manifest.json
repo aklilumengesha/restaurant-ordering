@@ -1,0 +1,13 @@
+{
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/orders/route": "app/api/orders/route.js",
+  "/api/reservations/route": "app/api/reservations/route.js",
+  "/api/notifications/route": "app/api/notifications/route.js",
+  "/staff/page": "app/staff/page.js",
+  "/api/shifts/route": "app/api/shifts/route.js",
+  "/orders/page": "app/orders/page.js",
+  "/reservations/page": "app/reservations/page.js",
+  "/page": "app/page.js",
+  "/api/my/profile/route": "app/api/my/profile/route.js",
+  "/(admin)/admin/staff/page": "app/(admin)/admin/staff/page.js"
+}
