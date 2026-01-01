@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Package, UtensilsCrossed, Users, BarChart3, Calendar, Clock, Home } from 'lucide-react'
+import { LayoutDashboard, Package, UtensilsCrossed, Users, BarChart3, Calendar, Clock, Home, Settings } from 'lucide-react'
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -11,6 +11,7 @@ const navItems = [
   { href: '/admin/reservations', label: 'Reservations', icon: Calendar },
   { href: '/admin/staff', label: 'Staff Shifts', icon: Clock },
   { href: '/admin/reports', label: 'Reports', icon: BarChart3 },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
 export function AdminSidebar() {

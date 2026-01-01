@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(admin)/admin/staff/page": [
+    "/(admin)/admin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(admin)/admin/staff/page.js"
+      "static/chunks/app/(admin)/admin/page.js"
     ],
     "/(admin)/admin/layout": [
       "static/chunks/webpack.js",
@@ -26,15 +26,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/staff/page.js"
     ],
-    "/orders/page": [
+    "/(auth)/signin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/orders/page.js"
+      "static/chunks/app/(auth)/signin/page.js"
+    ],
+    "/(admin)/admin/users/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(admin)/admin/users/page.js"
+    ],
+    "/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/page.js"
     ],
     "/reservations/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/reservations/page.js"
+    ],
+    "/orders/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/orders/page.js"
+    ],
+    "/cart/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/cart/page.js"
     ]
   }
 }

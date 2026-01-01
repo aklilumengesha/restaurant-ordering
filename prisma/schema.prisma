@@ -158,3 +158,36 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model SystemSettings {
+  id                    String   @id @default("default")
+  // Restaurant Info
+  restaurantName        String   @default("My Restaurant")
+  restaurantLogo        String?
+  restaurantPhone       String?
+  restaurantEmail       String?
+  restaurantAddress     String?
+  openingHours          Json?    // { monday: { open: "09:00", close: "22:00" }, ... }
+  // Payment Gateway Settings
+  paymentGateway        String   @default("stripe") // stripe, paypal, square
+  stripePublicKey       String?
+  stripeSecretKey       String?
+  paypalClientId        String?
+  paypalClientSecret    String?
+  squareAccessToken     String?
+  squareLocationId      String?
+  // Notification Settings
+  emailNotifications    Boolean  @default(true)
+  smsNotifications      Boolean  @default(false)
+  smtpHost              String?
+  smtpPort              Int?
+  smtpUser              String?
+  smtpPassword          String?
+  smtpFromEmail         String?
+  twilioAccountSid      String?
+  twilioAuthToken       String?
+  twilioPhoneNumber     String?
+  // Timestamps
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}

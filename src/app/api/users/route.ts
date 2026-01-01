@@ -3,8 +3,21 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
-export async function GET() {
-  const users = await prisma.user.findMany({ orderBy: { createdAt: 'desc' } })
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const roleParam = searchParams.get('role')
+  
+  const where: any = {}
+  if (roleParam) {
+    const roles = roleParam.split(',').map(r => r.trim())
+    where.role = { in: roles }
+  }
+  
+  const users = await prisma.user.findMany({ 
+    where,
+    orderBy: { createdAt: 'desc' },
+    select: { id: true, name: true, email: true, role: true, isActive: true, createdAt: true }
+  })
   return NextResponse.json(users)
 }
 

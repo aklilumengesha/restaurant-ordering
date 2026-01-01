@@ -1,33 +1,57 @@
 "use client"
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCart, calcTotals } from '@/lib/cart'
-import { ShoppingBag, Trash2, Plus, Minus, CreditCard, ArrowLeft } from 'lucide-react'
+import { ShoppingBag, Trash2, Plus, Minus, CreditCard, ArrowLeft, Loader2 } from 'lucide-react'
 
 export default function CartPage() {
   const { items, setQuantity, remove, subtotal, clear } = useCart()
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const sub = subtotal()
   const { tax, total } = calcTotals(sub)
 
   const checkout = async () => {
     if (items.length === 0) return
-    const resSession = await fetch('/api/auth/session')
-    const session = await resSession.json()
-    if (!session?.user) {
-      router.push('/signin?callbackUrl=/checkout')
-      return
+    setLoading(true)
+    setError(null)
+    
+    try {
+      const resSession = await fetch('/api/auth/session')
+      const session = await resSession.json()
+      if (!session?.user) {
+        router.push('/signin?callbackUrl=/cart')
+        return
+      }
+      
+      localStorage.setItem('restonext_last_order', JSON.stringify({ items, sub, tax, total }))
+      
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items.map((i) => ({ menuItemId: i.id, quantity: i.quantity })) }),
+      })
+      
+      if (!res.ok) {
+        const text = await res.text()
+        throw new Error(text || 'Checkout failed')
+      }
+      
+      const data = await res.json()
+      if (data?.url) {
+        window.location.href = data.url
+      } else {
+        throw new Error('No checkout URL received')
+      }
+    } catch (err: any) {
+      console.error('Checkout error:', err)
+      setError(err.message || 'Something went wrong. Please try again.')
+      setLoading(false)
     }
-    localStorage.setItem('restonext_last_order', JSON.stringify({ items, sub, tax, total }))
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: items.map((i) => ({ menuItemId: i.id, quantity: i.quantity })) }),
-    })
-    const data = await res.json()
-    if (data?.url) window.location.href = data.url
   }
 
   return (
@@ -122,9 +146,27 @@ export default function CartPage() {
                   <span className="gradient-text">${total.toFixed(2)}</span>
                 </div>
               </div>
-              <button onClick={checkout} className="btn-primary w-full flex items-center justify-center gap-2">
-                <CreditCard className="w-4 h-4" />
-                Proceed to Checkout
+              {error && (
+                <div className="p-3 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
+              <button 
+                onClick={checkout} 
+                disabled={loading}
+                className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="w-4 h-4" />
+                    Proceed to Checkout
+                  </>
+                )}
               </button>
               <p className="text-xs text-center text-gray-500 dark:text-gray-400">
                 Secure checkout powered by Stripe
