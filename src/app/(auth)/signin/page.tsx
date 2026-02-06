@@ -9,17 +9,25 @@ export default function SignInPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = useMemo(() => searchParams.get('callbackUrl') || '/', [searchParams])
   const serverError = searchParams.get('error')
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      router.replace(callbackUrl)
+    if (status === 'authenticated' && session?.user) {
+      const role = (session.user as any).role
+      // Redirect based on role
+      if (role === 'ADMIN') {
+        router.replace('/admin')
+      } else if (role === 'STAFF') {
+        router.replace('/staff')
+      } else {
+        router.replace(callbackUrl)
+      }
     }
-  }, [status, router, callbackUrl])
+  }, [status, session, router, callbackUrl])
 
   useEffect(() => {
     if (serverError) setError(serverError)
@@ -29,13 +37,13 @@ export default function SignInPage() {
     e.preventDefault()
     setError(null)
     setLoading(true)
-    const res = await signIn('credentials', { email, password, callbackUrl, redirect: false })
+    const res = await signIn('credentials', { email, password, redirect: false })
     setLoading(false)
     if (res?.error) {
       setError(res.error)
       return
     }
-    router.replace(callbackUrl)
+    // The useEffect will handle redirect based on role after session updates
   }
 
   const getErrorMessage = (err: string) => {

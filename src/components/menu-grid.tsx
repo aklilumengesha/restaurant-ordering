@@ -11,11 +11,11 @@ export function MenuGrid({ items }: { items: MenuItem[] }) {
         <div key={i.id} className="card card-hover overflow-hidden group">
           <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-800">
             {i.imageUrl ? (
-              <Image 
-                src={i.imageUrl} 
-                alt={i.name} 
-                fill 
-                className="object-cover group-hover:scale-110 transition-transform duration-500" 
+              <Image
+                src={i.imageUrl}
+                alt={i.name}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -41,11 +41,10 @@ export function MenuGrid({ items }: { items: MenuItem[] }) {
               <button
                 disabled={!i.isActive}
                 onClick={() => useCart.getState().add({ id: i.id, name: i.name, price: Number(i.price), imageUrl: i.imageUrl || undefined })}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 ${
-                  i.isActive 
-                    ? 'bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white shadow-md hover:shadow-lg' 
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-300 ${i.isActive
+                    ? 'bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white shadow-md hover:shadow-lg'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
-                }`}
+                  }`}
               >
                 <Plus className="w-4 h-4" />
                 Add

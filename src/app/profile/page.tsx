@@ -37,29 +37,29 @@ export default function ProfilePage() {
 
   useEffect(() => {
     let mounted = true
-    ;(async () => {
-      const resSession = await fetch('/api/auth/session')
-      const session = await resSession.json()
-      if (!mounted) return
-      if (!session?.user) {
-        setSignedIn(false)
-        setLoading(false)
-        return
-      }
-      setSignedIn(true)
-      try {
-        const res = await fetch('/api/my/profile')
-        if (!res.ok) throw new Error('Failed to load profile')
-        const json = await res.json()
+      ; (async () => {
+        const resSession = await fetch('/api/auth/session')
+        const session = await resSession.json()
         if (!mounted) return
-        setName(json.name || '')
-        setEmail(json.email || '')
-      } catch (e: any) {
-        setError(e?.message || 'Failed to load profile')
-      } finally {
-        setLoading(false)
-      }
-    })()
+        if (!session?.user) {
+          setSignedIn(false)
+          setLoading(false)
+          return
+        }
+        setSignedIn(true)
+        try {
+          const res = await fetch('/api/my/profile')
+          if (!res.ok) throw new Error('Failed to load profile')
+          const json = await res.json()
+          if (!mounted) return
+          setName(json.name || '')
+          setEmail(json.email || '')
+        } catch (e: any) {
+          setError(e?.message || 'Failed to load profile')
+        } finally {
+          setLoading(false)
+        }
+      })()
     return () => { mounted = false }
   }, [])
 
@@ -69,7 +69,7 @@ export default function ProfilePage() {
       fetch('/api/my/orders')
         .then(r => r.json())
         .then(setOrders)
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => setOrdersLoading(false))
     }
   }, [signedIn, activeTab, orders.length])
@@ -80,7 +80,7 @@ export default function ProfilePage() {
       fetch('/api/reservations?me=1')
         .then(r => r.json())
         .then(setReservations)
-        .catch(() => {})
+        .catch(() => { })
         .finally(() => setReservationsLoading(false))
     }
   }, [signedIn, activeTab, reservations.length])
@@ -168,11 +168,10 @@ export default function ProfilePage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-              activeTab === tab.id
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${activeTab === tab.id
                 ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-            }`}
+              }`}
           >
             <tab.icon className="w-4 h-4" />
             <span className="hidden sm:inline">{tab.label}</span>
@@ -189,7 +188,7 @@ export default function ProfilePage() {
               <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
             </div>
           )}
-          
+
           {ok && (
             <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 flex items-center gap-3">
               <CheckCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
@@ -201,11 +200,11 @@ export default function ProfilePage() {
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <User className="w-4 h-4" /> Name
             </label>
-            <input 
-              className="input" 
+            <input
+              className="input"
               placeholder="Your name"
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -213,12 +212,12 @@ export default function ProfilePage() {
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Mail className="w-4 h-4" /> Email
             </label>
-            <input 
-              className="input" 
+            <input
+              className="input"
               type="email"
               placeholder="you@example.com"
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -226,12 +225,12 @@ export default function ProfilePage() {
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
               <Lock className="w-4 h-4" /> New Password
             </label>
-            <input 
-              className="input" 
-              type="password" 
+            <input
+              className="input"
+              type="password"
               placeholder="Leave blank to keep current"
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <p className="text-xs text-gray-500 dark:text-gray-400">Only fill this if you want to change your password</p>
           </div>
@@ -284,7 +283,7 @@ export default function ProfilePage() {
                         </span>
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(order.createdAt).toLocaleDateString('en-US', { 
+                        {new Date(order.createdAt).toLocaleDateString('en-US', {
                           weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                         })}
                       </p>
@@ -341,7 +340,7 @@ export default function ProfilePage() {
                     <div>
                       <div className="flex items-center gap-3 mb-1">
                         <h3 className="font-semibold text-gray-900 dark:text-white">
-                          {new Date(reservation.startTime).toLocaleDateString('en-US', { 
+                          {new Date(reservation.startTime).toLocaleDateString('en-US', {
                             weekday: 'long', month: 'long', day: 'numeric'
                           })}
                         </h3>
