@@ -6,7 +6,7 @@ import { GetInTouch } from './get-in-touch'
 
 export function ConditionalFooter() {
   const pathname = usePathname()
-  const hideFooter = pathname === '/profile'
+  const hideFooter = pathname === '/profile' || pathname?.startsWith('/staff')
   
   if (hideFooter) return null
   

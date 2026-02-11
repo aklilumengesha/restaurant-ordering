@@ -57,9 +57,9 @@ function groupHours(hours: OpeningHours) {
 export function Footer() {
   const [settings, setSettings] = useState<Settings>({
     restaurantName: 'RestoNext',
-    restaurantAddress: '123 Restaurant Street\nFoodie City, FC 12345',
-    restaurantEmail: 'contact@restonext.com',
-    restaurantPhone: '(555) 123-4567',
+    restaurantAddress: 'Addis Ababa, Ethiopia',
+    restaurantEmail: 'aklilumengesha57@gmail.com',
+    restaurantPhone: '0998121942',
     openingHours: null
   })
 
@@ -70,9 +70,9 @@ export function Footer() {
         if (data) {
           setSettings({
             restaurantName: data.restaurantName || 'RestoNext',
-            restaurantAddress: data.restaurantAddress || '123 Restaurant Street\nFoodie City, FC 12345',
-            restaurantEmail: data.restaurantEmail || 'contact@restonext.com',
-            restaurantPhone: data.restaurantPhone || '(555) 123-4567',
+            restaurantAddress: data.restaurantAddress || 'Addis Ababa, Ethiopia',
+            restaurantEmail: data.restaurantEmail || 'aklilumengesha57@gmail.com',
+            restaurantPhone: data.restaurantPhone || '0998121942',
             openingHours: data.openingHours as OpeningHours
           })
         }
@@ -167,13 +167,21 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-200 dark:border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} {settings.restaurantName}. All rights reserved.
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-            Made with <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" /> for food lovers
-          </p>
+        <div className="border-t border-gray-200 dark:border-gray-800 mt-10 pt-8">
+          <div className="text-center space-y-2">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              © {new Date().getFullYear()} {settings.restaurantName}. All rights reserved.
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Developed by{' '}
+              <a 
+                href="mailto:aklilumengesha57@gmail.com" 
+                className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 font-medium transition-colors"
+              >
+                Aklilu Mengesha
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>
