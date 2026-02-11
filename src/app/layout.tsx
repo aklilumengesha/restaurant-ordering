@@ -9,6 +9,14 @@ import { ChatWidget } from '@/components/chat-widget'
 export const metadata = {
   title: 'RestoNext | Modern Restaurant Experience',
   description: 'Order delicious food online, make reservations, and enjoy a seamless dining experience',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

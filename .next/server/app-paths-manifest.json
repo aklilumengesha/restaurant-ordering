@@ -3,14 +3,10 @@
   "/staff/page": "app/staff/page.js",
   "/profile/page": "app/profile/page.js",
   "/page": "app/page.js",
-  "/reservations/page": "app/reservations/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/orders/page": "app/orders/page.js",
+  "/reservations/page": "app/reservations/page.js",
   "/api/my/profile/route": "app/api/my/profile/route.js",
   "/api/reservations/route": "app/api/reservations/route.js",
-  "/orders/page": "app/orders/page.js",
-  "/api/users/route": "app/api/users/route.js",
-  "/api/menu/all/route": "app/api/menu/all/route.js",
-  "/api/orders/route": "app/api/orders/route.js",
-  "/api/notifications/route": "app/api/notifications/route.js",
   "/(admin)/admin/page": "app/(admin)/admin/page.js"
 }
