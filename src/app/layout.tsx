@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { ThemeProvider } from 'next-themes'
 import { Providers } from '@/components/providers'
 import { Header } from '@/components/header'
-import { Footer } from '@/components/footer'
+import { ConditionalFooter } from '@/components/conditional-footer'
 import { ChatWidget } from '@/components/chat-widget'
 
 export const metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {children}
               </main>
-              <Footer />
+              <ConditionalFooter />
               <ChatWidget />
             </div>
           </Providers>
