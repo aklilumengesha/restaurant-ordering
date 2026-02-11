@@ -4,9 +4,6 @@
   "/orders/page": "app/orders/page.js",
   "/api/notifications/route": "app/api/notifications/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/my/profile/route": "app/api/my/profile/route.js",
-  "/api/reservations/route": "app/api/reservations/route.js",
-  "/api/admin/settings/route": "app/api/admin/settings/route.js",
   "/profile/page": "app/profile/page.js",
   "/(admin)/admin/page": "app/(admin)/admin/page.js"
 }
