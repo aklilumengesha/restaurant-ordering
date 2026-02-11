@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { Footer } from './footer'
+import { GetInTouch } from './get-in-touch'
 
 export function ConditionalFooter() {
   const pathname = usePathname()
@@ -9,5 +10,10 @@ export function ConditionalFooter() {
   
   if (hideFooter) return null
   
-  return <Footer />
+  return (
+    <>
+      <GetInTouch />
+      <Footer />
+    </>
+  )
 }
