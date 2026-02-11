@@ -18,6 +18,7 @@ export function Header() {
     { href: '/', label: 'Menu', show: true },
     { href: '/reservations', label: 'Reservations', show: true },
     { href: '/orders', label: 'My Orders', show: !!session },
+    { href: '/admin', label: 'Admin Dashboard', show: (session as any)?.user?.role === 'ADMIN' },
     { href: '/staff', label: 'Staff Dashboard', show: (session as any)?.user?.role === 'STAFF' },
   ]
 

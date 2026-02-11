@@ -46,20 +46,49 @@ export default async function HomePage({ searchParams }: { searchParams: SearchP
 
   return (
     <div className="space-y-8">
-      <div className="text-center max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm font-medium mb-4">
-          <Sparkles className="w-4 h-4" />
-          Fresh & Delicious
+      {/* Hero Section with Background Image */}
+      <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 mb-12">
+        <div className="relative h-[400px] md:h-[500px] overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80)',
+            }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70" />
+          </div>
+          
+          {/* Content */}
+          <div className="relative h-full container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+            <div className="text-center max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 backdrop-blur-sm border border-red-500/30 text-red-400 text-sm font-medium mb-6 animate-fade-in">
+                <Sparkles className="w-4 h-4" />
+                Fresh & Delicious
+              </div>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in-up">
+                Explore Our <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Menu</span>
+              </h1>
+              <p className="text-gray-200 text-lg md:text-xl mb-8 animate-fade-in-up animation-delay-200">
+                Discover our carefully crafted dishes made with the finest ingredients
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center animate-fade-in-up animation-delay-400">
+                <a href="#menu" className="btn-primary bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 shadow-lg shadow-red-500/30">
+                  Browse Menu
+                </a>
+                <a href="/reservations" className="px-6 py-3 rounded-xl font-medium text-white border-2 border-white/30 hover:bg-white/10 backdrop-blur-sm transition-all">
+                  Make Reservation
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          Explore Our <span className="gradient-text">Menu</span>
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 text-lg">
-          Discover our carefully crafted dishes made with the finest ingredients
-        </p>
       </div>
 
-      <MenuFilters />
+      <div id="menu" className="scroll-mt-20">
+        <MenuFilters />
+      </div>
       
       {items.length === 0 ? (
         <div className="card p-12 text-center">
