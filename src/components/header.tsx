@@ -71,26 +71,39 @@ export function Header() {
             {status === 'loading' ? (
               <div className="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 animate-pulse" />
             ) : session ? (
-              <div className="hidden sm:flex items-center gap-2">
+              <>
+                {/* Desktop Profile */}
+                <div className="hidden sm:flex items-center gap-2">
+                  <Link 
+                    href="/profile" 
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white text-xs font-semibold">
+                      {session.user?.name?.[0]?.toUpperCase() || session.user?.email?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                    <span className="text-sm font-medium max-w-[100px] truncate">
+                      {session.user?.name || session.user?.email?.split('@')[0] || 'Profile'}
+                    </span>
+                  </Link>
+                  <button 
+                    onClick={() => signOut({ callbackUrl: '/' })} 
+                    className="btn-icon hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 hover:text-red-600"
+                    aria-label="Sign out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+                {/* Mobile Profile Icon */}
                 <Link 
-                  href="/profile" 
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  href="/profile"
+                  className="sm:hidden btn-icon"
+                  aria-label="Profile"
                 >
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-                    <User className="w-3 h-3 text-white" />
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white text-xs font-semibold">
+                    {session.user?.name?.[0]?.toUpperCase() || session.user?.email?.[0]?.toUpperCase() || 'U'}
                   </div>
-                  <span className="text-sm font-medium max-w-[100px] truncate">
-                    {session.user?.name || session.user?.email?.split('@')[0] || 'Profile'}
-                  </span>
                 </Link>
-                <button 
-                  onClick={() => signOut({ callbackUrl: '/' })} 
-                  className="btn-icon hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-800 hover:text-red-600"
-                  aria-label="Sign out"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
-              </div>
+              </>
             ) : (
               <Link href="/signin" className="btn-primary text-sm hidden sm:inline-flex">
                 Sign in

@@ -1,9 +1,19 @@
+'use client'
+
 import { Heart, ChefHat, MapPin, Mail, Phone, Clock } from 'lucide-react'
 import Link from 'next/link'
-import { prisma } from '@/lib/prisma'
+import { useEffect, useState } from 'react'
 
 type OpeningHours = {
   [key: string]: { open: string; close: string; closed: boolean }
+}
+
+type Settings = {
+  restaurantName: string
+  restaurantAddress: string
+  restaurantEmail: string
+  restaurantPhone: string
+  openingHours: OpeningHours | null
 }
 
 function formatTime(time: string) {
@@ -41,26 +51,38 @@ function groupHours(hours: OpeningHours) {
     i = endIdx + 1
   }
   
-  return groups.slice(0, 3) // Limit to 3 groups for display
+  return groups.slice(0, 3)
 }
 
-export async function Footer() {
-  let settings = null
-  try {
-    settings = await prisma.systemSettings.findUnique({
-      where: { id: 'default' }
-    })
-  } catch {
-    // Settings table might not exist yet
-  }
+export function Footer() {
+  const [settings, setSettings] = useState<Settings>({
+    restaurantName: 'RestoNext',
+    restaurantAddress: '123 Restaurant Street\nFoodie City, FC 12345',
+    restaurantEmail: 'contact@restonext.com',
+    restaurantPhone: '(555) 123-4567',
+    openingHours: null
+  })
 
-  const restaurantName = settings?.restaurantName || 'RestoNext'
-  const restaurantAddress = settings?.restaurantAddress || '123 Restaurant Street\nFoodie City, FC 12345'
-  const restaurantEmail = settings?.restaurantEmail || 'contact@restonext.com'
-  const restaurantPhone = settings?.restaurantPhone || '(555) 123-4567'
-  const openingHours = (settings?.openingHours as OpeningHours) || null
-  
-  const hoursGroups = openingHours ? groupHours(openingHours) : [
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          setSettings({
+            restaurantName: data.restaurantName || 'RestoNext',
+            restaurantAddress: data.restaurantAddress || '123 Restaurant Street\nFoodie City, FC 12345',
+            restaurantEmail: data.restaurantEmail || 'contact@restonext.com',
+            restaurantPhone: data.restaurantPhone || '(555) 123-4567',
+            openingHours: data.openingHours as OpeningHours
+          })
+        }
+      })
+      .catch(() => {
+        // Use defaults
+      })
+  }, [])
+
+  const hoursGroups = settings.openingHours ? groupHours(settings.openingHours) : [
     { days: 'Mon - Fri', hours: '11:00 AM - 10:00 PM' },
     { days: 'Sat - Sun', hours: '10:00 AM - 11:00 PM' }
   ]
@@ -75,7 +97,7 @@ export async function Footer() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/20">
                 <ChefHat className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold gradient-text">{restaurantName}</span>
+              <span className="text-xl font-bold gradient-text">{settings.restaurantName}</span>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
               Experience the finest dining with our carefully crafted menu. Order online, make reservations, and enjoy exceptional service.
@@ -115,15 +137,15 @@ export async function Footer() {
             <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 mt-0.5 text-red-500 flex-shrink-0" />
-                <span className="whitespace-pre-line">{restaurantAddress}</span>
+                <span className="whitespace-pre-line">{settings.restaurantAddress}</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-red-500 flex-shrink-0" />
-                <a href={`mailto:${restaurantEmail}`} className="hover:text-red-500 transition-colors">{restaurantEmail}</a>
+                <a href={`mailto:${settings.restaurantEmail}`} className="hover:text-red-500 transition-colors">{settings.restaurantEmail}</a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-red-500 flex-shrink-0" />
-                <a href={`tel:${restaurantPhone.replace(/\D/g, '')}`} className="hover:text-red-500 transition-colors">{restaurantPhone}</a>
+                <a href={`tel:${settings.restaurantPhone.replace(/\D/g, '')}`} className="hover:text-red-500 transition-colors">{settings.restaurantPhone}</a>
               </li>
             </ul>
           </div>
@@ -147,7 +169,7 @@ export async function Footer() {
         
         <div className="border-t border-gray-200 dark:border-gray-800 mt-10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} {restaurantName}. All rights reserved.
+            © {new Date().getFullYear()} {settings.restaurantName}. All rights reserved.
           </p>
           <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
             Made with <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" /> for food lovers
