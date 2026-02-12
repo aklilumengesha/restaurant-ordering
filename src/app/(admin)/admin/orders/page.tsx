@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import OrdersControls from './status-client'
 
+export const dynamic = 'force-dynamic'
+
 export default async function OrdersAdminPage() {
   const orders = await prisma.order.findMany({ include: { items: { include: { menuItem: true } }, user: true }, orderBy: { createdAt: 'desc' } })
   const staff = await prisma.user.findMany({ where: { role: { in: ['ADMIN', 'STAFF'] } }, orderBy: { name: 'asc' } })

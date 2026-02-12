@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { MenuStatusToggle } from './status-client'
 
+export const dynamic = 'force-dynamic'
+
 const categoryOrder = ['APPETIZERS','MAINS','DESSERTS','DRINKS'] as const
 const categoryLabels: Record<string,string> = { APPETIZERS: 'Appetizers', MAINS: 'Mains', DESSERTS: 'Desserts', DRINKS: 'Drinks' }
 

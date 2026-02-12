@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import ReportsClient from './reports-client'
 
+export const dynamic = 'force-dynamic'
+
 function startOfDay(date = new Date()) { const d = new Date(date); d.setHours(0,0,0,0); return d }
 function fmtDay(d: Date) { return d.toISOString().slice(0,10) }
 function monthKey(d: Date) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}` }
