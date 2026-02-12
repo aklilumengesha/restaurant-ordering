@@ -1,6 +1,25 @@
-# 🍽️ RestoNext
+<div align="center">
 
-A modern full-stack restaurant management system with online ordering, reservations, and real-time operations.
+# 🍽️ RestoNext  
+### Modern Full-Stack Restaurant Management & Online Ordering Platform
+
+A production-ready restaurant system built with **Next.js 14**, **Prisma**, and **PostgreSQL**, featuring online ordering, reservations, payments, and real-time operations.
+
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791)](https://www.postgresql.org/)
+[![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF)](https://stripe.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+</div>
+
+---
+
+## ✨ Overview
+
+**RestoNext** is a modern restaurant management platform designed to handle everything from **online orders** and **table reservations** to **staff operations**, **payments**, and **analytics** — all in one system.
+
+Built with scalability, performance, and real-world usage in mind.
 
 ## ✨ Features
 
@@ -149,4 +168,4 @@ Next.js • TypeScript • Prisma • PostgreSQL • Stripe • Tailwind CSS •
 
 ---
 
-Made with ❤️ for modern restaurants
+Developed by [Aklilu Mengesha](mailto:aklilumengesha57@gmail.com)
