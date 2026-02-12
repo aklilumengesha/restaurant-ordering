@@ -1,12 +1,10 @@
 "use client"
 import { signIn, useSession } from 'next-auth/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Mail, Lock, AlertCircle, ChefHat } from 'lucide-react'
 
-export const dynamic = 'force-dynamic'
-
-export default function SignInPage() {
+function SignInForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -14,13 +12,12 @@ export default function SignInPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = useMemo(() => searchParams.get('callbackUrl') || '/', [searchParams])
+  const callbackUrl = searchParams.get('callbackUrl') || '/'
   const serverError = searchParams.get('error')
 
   useEffect(() => {
     if (status === 'authenticated' && session?.user) {
       const role = (session.user as any).role
-      // Redirect based on role
       if (role === 'ADMIN') {
         router.replace('/admin')
       } else if (role === 'STAFF') {
@@ -45,7 +42,6 @@ export default function SignInPage() {
       setError(res.error)
       return
     }
-    // The useEffect will handle redirect based on role after session updates
   }
 
   const getErrorMessage = (err: string) => {
@@ -146,5 +142,17 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <SignInForm />
+    </Suspense>
   )
 }
