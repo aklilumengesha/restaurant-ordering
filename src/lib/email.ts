@@ -15,6 +15,24 @@ export async function sendReservationEmail({ to, subject, html }: { to: string; 
     throw new Error('SMTP not configured')
   }
 
-  const transporter = nodemailer.createTransport({ host, port, auth: { user, pass } })
-  await transporter.sendMail({ from, to, subject, html })
+  const transporter = nodemailer.createTransport({
+    host,
+    port,
+    secure: false,
+    auth: { user, pass },
+    tls: { rejectUnauthorized: false }
+  })
+
+  try {
+    const info = await transporter.sendMail({
+      from: `"Restaurant" <${from}>`,
+      to,
+      subject,
+      html
+    })
+    return info
+  } catch (error: any) {
+    console.error('Failed to send email:', error.message)
+    throw error
+  }
 }
