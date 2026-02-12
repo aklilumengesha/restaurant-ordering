@@ -1,9 +1,11 @@
 "use client"
 import { useEffect, useState } from 'react'
-import { Calendar, Clock, Users, Phone, Mail, User, FileText, CheckCircle, AlertCircle } from 'lucide-react'
+import { Calendar, Clock, Users, Phone, Mail, User, FileText, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 
 export default function ReservationsPage() {
   const [signedIn, setSignedIn] = useState<boolean | null>(null)
+  const [availableSlots, setAvailableSlots] = useState<string[]>([])
+  const [loadingSlots, setLoadingSlots] = useState(false)
 
   useEffect(() => {
     let mounted = true
@@ -32,6 +34,28 @@ export default function ReservationsPage() {
       fetch('/api/reservations?me=1').then(r => r.json()).then(setMyReservations).catch(() => {})
     }
   }, [signedIn])
+
+  // Fetch available slots when date changes
+  useEffect(() => {
+    if (form.date) {
+      setLoadingSlots(true)
+      fetch(`/api/reservations/availability?date=${form.date}`)
+        .then(r => r.json())
+        .then(data => {
+          // Filter out unavailable slots
+          const available = (data.slots || []).filter((slot: string) => !data.unavailable?.includes(slot))
+          setAvailableSlots(available)
+          // Reset time if current selection is not available
+          if (form.time && !available.includes(form.time)) {
+            setForm(f => ({ ...f, time: '' }))
+          }
+        })
+        .catch(() => setAvailableSlots([]))
+        .finally(() => setLoadingSlots(false))
+    } else {
+      setAvailableSlots([])
+    }
+  }, [form.date])
 
   const handleSubmit = async () => {
     setBusy(true)
@@ -139,12 +163,33 @@ export default function ReservationsPage() {
                 <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                   <Clock className="w-4 h-4" /> Time
                 </label>
-                <input 
-                  type="time" 
-                  className="input" 
-                  value={form.time} 
-                  onChange={(e) => setForm({ ...form, time: e.target.value })} 
-                />
+                {loadingSlots ? (
+                  <div className="input flex items-center justify-center gap-2 text-gray-500">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Loading slots...
+                  </div>
+                ) : !form.date ? (
+                  <div className="input text-gray-400">
+                    Select a date first
+                  </div>
+                ) : availableSlots.length === 0 ? (
+                  <div className="input text-red-500">
+                    No slots available
+                  </div>
+                ) : (
+                  <select
+                    className="input"
+                    value={form.time}
+                    onChange={(e) => setForm({ ...form, time: e.target.value })}
+                  >
+                    <option value="">Select a time</option>
+                    {availableSlots.map(slot => (
+                      <option key={slot} value={slot}>
+                        {slot}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
             </div>
 

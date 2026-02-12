@@ -1,10 +1,11 @@
 {
   "/page": "app/page.js",
+  "/reservations/page": "app/reservations/page.js",
   "/api/reservations/route": "app/api/reservations/route.js",
   "/api/orders/route": "app/api/orders/route.js",
   "/api/notifications/route": "app/api/notifications/route.js",
-  "/api/users/route": "app/api/users/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/api/menu/all/route": "app/api/menu/all/route.js",
+  "/api/reservations/[id]/route": "app/api/reservations/[id]/route.js",
+  "/api/reservations/[id]/approve/route": "app/api/reservations/[id]/approve/route.js",
   "/staff/page": "app/staff/page.js"
 }

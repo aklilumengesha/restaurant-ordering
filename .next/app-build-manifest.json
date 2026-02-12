@@ -11,6 +11,11 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/reservations/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/reservations/page.js"
+    ],
     "/staff/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
