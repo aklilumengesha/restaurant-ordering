@@ -61,7 +61,6 @@ export default async function ReportsAdminPage() {
   }
   const reservationsTrend = Array.from(resMap.entries()).map(([day, count])=>({ day, count }))
 
-  // @ts-expect-error Server -> Client
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">

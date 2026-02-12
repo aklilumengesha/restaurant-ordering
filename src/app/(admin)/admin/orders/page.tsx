@@ -9,7 +9,6 @@ export default async function OrdersAdminPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Orders Management</h1>
       </div>
-      {/* @ts-expect-error Server Component to Client Component props */}
       <OrdersControls orders={orders} staff={staff} />
     </div>
   )

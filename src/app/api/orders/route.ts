@@ -18,7 +18,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await auth()
+  const session = await getServerSession(authOptions)
   if (!session?.user?.email) return new NextResponse('Unauthorized', { status: 401 })
   const json = await req.json()
   const parsed = CreateOrderSchema.safeParse(json)
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const session = await auth()
+  const session = await getServerSession(authOptions)
   if (!session || (session.user as any)?.role === 'CUSTOMER') return new NextResponse('Forbidden', { status: 403 })
   const json = await req.json()
   const { id, status, assignedToId } = json

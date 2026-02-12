@@ -16,5 +16,5 @@ export default async function SettingsPage() {
     })
   }
 
-  return <SettingsClient initialSettings={settings} />
+  return <SettingsClient initialSettings={settings as any} />
 }

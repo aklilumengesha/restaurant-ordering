@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Stripe API key not configured. Please set STRIPE_SECRET_KEY in .env file.' }, { status: 500 })
     }
     
-    const stripe = new Stripe(stripeKey, { apiVersion: '2024-12-18.acacia' })
+    const stripe = new Stripe(stripeKey, { apiVersion: '2024-06-20' })
     const session = await getServerSession(authOptions)
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

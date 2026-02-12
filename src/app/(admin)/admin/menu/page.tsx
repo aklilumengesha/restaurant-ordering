@@ -49,7 +49,6 @@ export default async function MenuAdminPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    {/* @ts-expect-error Server -> Client */}
                     <MenuStatusToggle id={i.id} isActive={i.isActive} />
                     <Link href={`/admin/menu/${i.id}`} className="px-2 py-1 text-xs rounded border">Edit</Link>
                   </div>

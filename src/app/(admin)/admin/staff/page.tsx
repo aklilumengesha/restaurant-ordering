@@ -17,7 +17,6 @@ export default async function StaffManagementPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Staff Management</h1>
       </div>
-      {/* @ts-expect-error Server -> Client */}
       <StaffClient staff={staff} openOrders={openOrders} upcomingReservations={upcomingReservations} shifts={shifts} perfOrders={perfOrders} perfRes={perfRes} />
     </div>
   )

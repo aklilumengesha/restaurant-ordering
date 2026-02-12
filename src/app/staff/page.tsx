@@ -30,6 +30,5 @@ export default async function StaffPage() {
     // Shift table might not exist yet
   }
 
-  // @ts-expect-error Server Component to Client Component
-  return <StaffDashboardClient initialOrders={orders} initialReservations={reservations} myShifts={myShifts} />
+  return <StaffDashboardClient initialOrders={orders as any} initialReservations={reservations as any} myShifts={myShifts} />
 }

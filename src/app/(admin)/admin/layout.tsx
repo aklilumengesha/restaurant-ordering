@@ -10,8 +10,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <AdminSidebar />
       </aside>
       <section className="col-span-12 md:col-span-9 lg:col-span-10 space-y-6">{children}</section>
-      {/* Client alerts overlay */}
-      {/* @ts-expect-error Server -> Client */}
       <AdminAlerts />
     </div>
   )
