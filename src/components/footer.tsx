@@ -65,7 +65,10 @@ export function Footer() {
 
   useEffect(() => {
     fetch('/api/admin/settings')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) return null
+        return res.json()
+      })
       .then(data => {
         if (data) {
           setSettings({

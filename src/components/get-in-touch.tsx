@@ -10,7 +10,10 @@ export function GetInTouch() {
 
   useEffect(() => {
     fetch('/api/admin/settings')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) return null
+        return res.json()
+      })
       .then(data => {
         if (data) {
           setRestaurantEmail(data.restaurantEmail || 'aklilumengesha57@gmail.com')
